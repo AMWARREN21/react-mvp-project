@@ -1,4 +1,5 @@
 import React from "react";
+import InputTodo from "./component/InputTodo";
 import Todos from "./component/Todos";
 
 class App extends React.Component {
@@ -19,12 +20,27 @@ class App extends React.Component {
 
     render() {
 
+        const addTodo = (newTodo) => {
+            this.setState({ todos: [...this.state.todos, newTodo] })
+            const obj = {
+                "todo": newTodo
+            }
+            fetch('http://localhost:8000/api/todos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                body: JSON.stringify(obj)
+            })
+        }
+
         if (this.state.loading) {
             return (<h1>{this.state.loadingMessage}</h1>)
         }
 
         return (
-            <Todos todos={this.state.todos} />
+            <>
+                <InputTodo addTodo={addTodo} />
+                <Todos todos={this.state.todos} />
+            </>
         )
     }
 }
