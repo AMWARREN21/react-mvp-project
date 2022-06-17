@@ -22,6 +22,15 @@ app.get('/api/todos', async (req, res) => {
     }
 });
 
+app.post('/api/todos', async (req, res) => {
+    try {
+        const result = await pool.query('INSERT INTO todos (todo) VALUES ($1) RETURNING *;', [req.body.todo])
+        res.json(result.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
 app.listen(PORT, () => {
     console.log('Listening on PORT:', PORT)
 })
