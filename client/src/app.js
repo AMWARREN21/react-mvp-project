@@ -18,10 +18,16 @@ class App extends React.Component {
             .then((data) => this.setState({ todos: data, loading: false }))
     }
 
+    componentDidUpdate(prevState) {
+        if (prevState.todos !== this.state.todos) {
+            this.componentDidMount()
+        }
+    }
+
+
     render() {
 
         const addTodo = (newTodo) => {
-            this.setState({ todos: [...this.state.todos, newTodo] })
             const obj = {
                 "todo": newTodo
             }
@@ -30,6 +36,7 @@ class App extends React.Component {
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify(obj)
             })
+            this.setState({ todos: [...this.state.todos, newTodo] })
         }
 
         if (this.state.loading) {
