@@ -31,6 +31,16 @@ app.post('/api/todos', async (req, res) => {
     }
 })
 
+app.patch('/api/todos/:id', async (req, res) => {
+    try {
+        const { todo } = req.body
+        const result = await pool.query('UPDATE todos SET todo = $1 WHERE todo_id IS $2 RETURNING *;', [todo, req.params.id])
+        res.json(result.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
 app.delete('/api/todos/:id', async (req, res) => {
     try {
         const result = await pool.query('DELETE FROM todos WHERE todo_id = $1', [req.params.id])
