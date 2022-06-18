@@ -1,6 +1,7 @@
 import React from "react";
-import InputTodo from "./component/InputTodo";
-import Todos from "./component/Todos";
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Header from "./component/Header";
+import Home from "./pages/Home";
 
 class App extends React.Component {
     constructor(props) {
@@ -28,26 +29,28 @@ class App extends React.Component {
     render() {
 
         const addTodo = (newTodo) => {
-            const obj = {
-                "todo": newTodo
-            }
             fetch('http://localhost:8000/api/todos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-                body: JSON.stringify(obj)
+                body: JSON.stringify({ "todo": newTodo })
             })
             this.setState({ todos: [...this.state.todos, newTodo] })
         }
 
         const DeleteTodo = (e) => {
-
             fetch(`http://localhost:8000/api/todos/${e.target.parentNode.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             })
+            const todos = this.state.todos.filter(todo => todo.todo_id !== parseInt(e.target.parentNode.id))
+            this.setState({ todos: todos })
+        }
 
-            const result = this.state.todos.filter(todo => todo.todo_id !== parseInt(e.target.parentNode.id))
-            this.setState({ todos: result })
+        const handleEdit = (e) => {
+            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            })
         }
 
         if (this.state.loading) {
@@ -56,8 +59,12 @@ class App extends React.Component {
 
         return (
             <>
-                <InputTodo addTodo={addTodo} />
-                <Todos todos={this.state.todos} DeleteTodo={DeleteTodo} />
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Navigate to="/home" />} />
+                    <Route path='/home' element={
+                        <Home todos={this.state.todos} addTodo={addTodo} DeleteTodo={DeleteTodo} handleEdit={handleEdit} />} />
+                </Routes>
             </>
         )
     }
