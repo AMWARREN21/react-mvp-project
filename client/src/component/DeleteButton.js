@@ -6,7 +6,7 @@ class DeleteButton extends React.Component {
             this.props.DeleteTodo(e)
         }
         return (
-            <button onClick={DeleteTodo}>Delete</button>
+            <button className="delete" onClick={DeleteTodo}>Erase</button>
         )
     }
 }
