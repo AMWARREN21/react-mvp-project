@@ -27,6 +27,7 @@ class InputTodo extends React.Component {
                     value={this.state.value}
                     type="text"
                     onChange={handleChange}
+                    placeholder="Todo"
                 ></input>
                 <input
                     type="submit"
