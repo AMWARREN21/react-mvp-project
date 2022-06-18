@@ -5,7 +5,7 @@ body {
 #root {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 3rem min(89vh) 3rem;
+    grid-template-rows: 5vh min(95vh);
 }
 
 .header-container {
@@ -66,8 +66,114 @@ a:hover {
 
 .content-container {
     padding-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    background-color: #89c4f4;
+    color: white;
+    font-family: 'Nanum Pen Script', cursive;
 }
 
-button:hover {
+button:hover,
+input[type=submit]:hover {
     cursor: pointer;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow-wrap: normal;
+    background-image: url('https://toppng.com/uploads/preview/joes-notebook-template-blues-clues-and-more-in-pinterest-blues-clues-11563346876lmp4mgiqol.png');
+}
+
+.clock-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #36A1D4;
+    min-height: 100%;
+    min-width: 50%;
+    padding-top: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media screen and (max-width: 950px) {
+    .main-container {
+        flex-direction: column-reverse;
+    }
+
+    .clock-container {
+        display: none;
+    }
+
+    .content-container {
+        min-height: 70%;
+        min-width: 100%;
+    }
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+    border-radius: 40px;
+    justify-content: space-between;
+    height: 5rem;
+    gap: 5px;
+}
+
+button,
+input[type=submit] {
+    width: 5rem;
+    height: 2rem;
+    border-radius: 10px;
+    background-color: #023047;
+    color: white;
+    border: none;
+}
+
+.delete {
+    background-color: #fb8500;
+}
+
+input[type=text] {
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #fb8500;
+    padding-top: 3rem;
+    padding-right: 10rem;
+    font-size: 1.5rem;
+    color: white;
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+input[type=submit] {
+    background-color: #024720;
+}
+
+form {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.buttons {
+    display: flex;
+    gap: 3px;
+}
+
+.time {
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 5rem;
+    transform: translateY(-3rem);
+    color: white
 }
