@@ -9,7 +9,8 @@ class App extends React.Component {
         this.state = {
             todos: null,
             loading: true,
-            loadingMessage: 'Please be patient'
+            loadingMessage: 'Please be patient',
+            date: new Date()
         }
     }
 
@@ -17,12 +18,21 @@ class App extends React.Component {
         fetch('http://localhost:8000/api/todos')
             .then(result => result.json())
             .then((data) => this.setState({ todos: data, loading: false }))
+
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        )
     }
 
     componentDidUpdate(prevState) {
         if (prevState.todos !== this.state.todos) {
             this.componentDidMount()
         }
+    }
+
+    tick() {
+        this.setState({ date: new Date() })
     }
 
 
@@ -63,7 +73,7 @@ class App extends React.Component {
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
                     <Route path='/home' element={
-                        <Home todos={this.state.todos} addTodo={addTodo} DeleteTodo={DeleteTodo} handleEdit={handleEdit} />} />
+                        <Home todos={this.state.todos} addTodo={addTodo} DeleteTodo={DeleteTodo} handleEdit={handleEdit} clock={this.state.date.toLocaleTimeString()} />} />
                 </Routes>
             </>
         )
