@@ -39,6 +39,17 @@ class App extends React.Component {
             this.setState({ todos: [...this.state.todos, newTodo] })
         }
 
+        const DeleteTodo = (e) => {
+
+            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            })
+
+            const result = this.state.todos.filter(todo => todo.todo_id !== parseInt(e.target.parentNode.id))
+            this.setState({ todos: result })
+        }
+
         if (this.state.loading) {
             return (<h1>{this.state.loadingMessage}</h1>)
         }
@@ -46,7 +57,7 @@ class App extends React.Component {
         return (
             <>
                 <InputTodo addTodo={addTodo} />
-                <Todos todos={this.state.todos} />
+                <Todos todos={this.state.todos} DeleteTodo={DeleteTodo} />
             </>
         )
     }
