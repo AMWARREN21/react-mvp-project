@@ -1,0 +1,73 @@
+body {
+    margin: 0
+}
+
+#root {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 3rem min(89vh) 3rem;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #36A1D4;
+    font-family: 'Yellowtail', cursive;
+    color: white
+}
+
+.title {
+    padding-left: 10px;
+    font-size: 1.5rem;
+}
+
+.title,
+.complete {
+    text-shadow:
+        #E7E3D4 0 0 10px,
+        #E7E3D4 0 0 10px;
+}
+
+.incomplete {
+    animation: neon 3s infinite;
+}
+
+.title:hover,
+a:hover {
+    cursor: pointer;
+}
+
+@keyframes neon {
+
+    0%,
+    39%,
+    41%,
+    59%,
+    61%,
+    100% {
+        text-shadow:
+            #b23850 0 0 10px,
+            #b23850 0 0 10px;
+    }
+
+    40%,
+    60% {
+        text-shadow: none;
+    }
+
+}
+
+.header-container>nav {
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
+}
+
+.content-container {
+    padding-top: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
