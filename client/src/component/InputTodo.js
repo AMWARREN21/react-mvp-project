@@ -24,6 +24,7 @@ class InputTodo extends React.Component {
         return (
             <form onSubmit={handleAddTodo}>
                 <input
+                    id="todo-input"
                     value={this.state.value}
                     type="text"
                     onChange={handleChange}
