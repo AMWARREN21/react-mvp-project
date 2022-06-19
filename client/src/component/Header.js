@@ -2,12 +2,13 @@ import React from "react";
 
 class Header extends React.Component {
     render() {
+
         return (
-            <div className="header-container">
-                <h1 className="title">Todo-List</h1>
+            <div className="navigation-bar">
+                <a href="/home" className="title">Todo-List</a>
                 <nav>
-                    <a className="complete">Completed</a>
-                    <a className="incomplete">Incomplete</a>
+                    <a href="/complete" className="complete">Completed</a>
+                    <a href="/incomplete" className="incomplete">Incomplete</a>
                 </nav>
             </div>
         )
