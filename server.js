@@ -2,6 +2,7 @@ const dotenv = require('dotenv')
 const express = require('express')
 const cors = require('cors')
 const pool = require('./db/connect.js')
+const path = require('path')
 const app = express()
 dotenv.config()
 
