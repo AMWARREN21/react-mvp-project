@@ -140,7 +140,7 @@ input[type=submit] {
     border: none;
 }
 
-.delete {
+.Erase {
     background-color: #fb8500;
 }
 
@@ -176,4 +176,9 @@ form {
     font-size: 5rem;
     transform: translateY(-3rem);
     color: white
+}
+
+.time:hover,
+.container {
+    cursor: default;
 }
