@@ -29,6 +29,7 @@ class InputTodo extends React.Component {
                     type="text"
                     onChange={handleChange}
                     placeholder="Todo"
+                    autoComplete="off"
                 ></input>
                 <input
                     type="submit"
