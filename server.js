@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import cors from 'cors'
-import pool from './db/connect.js';
+const dotenv = require('dotenv')
+const express = require('express')
+const cors = require('cors')
+const pool = require('./db/connect.js')
 const app = express()
 dotenv.config()
 
