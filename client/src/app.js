@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Header from "./component/Header";
+import CompletedPage from "./pages/Completed";
+import IncompletePage from "./pages/Incomplete"
 import Home from "./pages/Home";
 
 class App extends React.Component {
@@ -34,19 +36,19 @@ class App extends React.Component {
 
     render() {
 
+        const toggle = (e) => {
+            const elem = document.getElementById(`${e.target.parentNode.parentNode.id}`)
+            elem.classList.toggle('true')
+            elem.classList.toggle('false')
+        }
+
         const addTodo = (newTodo) => {
             fetch('http://localhost:8000/api/todos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ "todo": newTodo })
             })
-            this.setState({ todos: [...this.state.todos, newTodo], editing: false })
-        }
-
-        const singleTodo = (e) => {
-            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`)
-                .then(response => response.json())
-                .then((data) => this.setState({ editText: data }))
+            this.setState({ todos: [...this.state.todos, newTodo] })
         }
 
         const DeleteTodo = (e) => {
@@ -59,17 +61,26 @@ class App extends React.Component {
         }
 
         const handleEdit = (e) => {
+            toggle(e)
+            let completed = e.target.parentNode.parentNode.classList[1]
             fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                body: JSON.stringify({ completed: completed })
             })
-            const todos = this.state.todos.filter(todo => todo.todo_id !== parseInt(e.target.parentNode.id))
-            this.setState({ todos: todos, editing: true })
-            singleTodo(e)
+            this.setState({ todos: this.state.todos })
         }
 
         if (this.state.loading) {
             return (<h1>{this.state.loadingMessage}</h1>)
+        }
+
+        const state = {
+            todos: this.state.todos,
+            addTodo: addTodo,
+            DeleteTodo: DeleteTodo,
+            clock: this.state.date.toLocaleTimeString(),
+            handleEdit: handleEdit
         }
 
         return (
@@ -77,12 +88,9 @@ class App extends React.Component {
                 <Header />
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
-                    <Route path='/home' element={
-                        <Home todos={this.state.todos}
-                            addTodo={addTodo}
-                            DeleteTodo={DeleteTodo}
-                            clock={this.state.date.toLocaleTimeString()}
-                        />} />
+                    <Route path='/home' element={<Home state={state} />} />
+                    <Route path="/complete" element={<CompletedPage state={state} />} />
+                    <Route path="/incomplete" element={<IncompletePage state={state} />} />
                 </Routes>
             </>
         )
