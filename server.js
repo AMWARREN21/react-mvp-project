@@ -22,6 +22,15 @@ app.get('/api/todos', async (req, res) => {
     }
 });
 
+app.get('/api/todos/:id', async (req, res) => {
+    try {
+        const data = await pool.query('SELECT * FROM todos WHERE todo_id = $1;', [req.params.id])
+        res.json(data.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+});
+
 app.post('/api/todos', async (req, res) => {
     try {
         const result = await pool.query('INSERT INTO todos (todo) VALUES ($1) RETURNING *;', [req.body.todo])
