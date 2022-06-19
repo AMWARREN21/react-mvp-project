@@ -3,18 +3,21 @@ import Button from "./Button";
 
 class Todo extends React.Component {
     render() {
-        let completed = this.props.todo.completed
-
-        if (!this.props.todo.completed) {
-            completed = false
-        }
 
         return (
-            <div id={this.props.todo.todo_id} className={`todo ${completed}`}>
+            <div
+                id={this.props.todo.todo_id}
+                className={`todo ${this.props.todo.completed}`}>
                 <h1>{this.props.todo.todo}</h1>
                 <div className="buttons">
-                    <Button class={"Erase"} handleTodo={this.props.DeleteTodo} />
-                    <Button class={"Edit"} />
+                    <Button
+                        class={"Erase"}
+                        text={"Erase"}
+                        handleTodo={this.props.DeleteTodo} />
+                    <Button
+                        class={"toggle"}
+                        text={"Complete?"}
+                        handleTodo={this.props.HandleEdit} />
                 </div>
             </div>
         )
