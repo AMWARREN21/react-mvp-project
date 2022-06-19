@@ -10,7 +10,8 @@ class App extends React.Component {
             todos: null,
             loading: true,
             loadingMessage: 'Please be patient',
-            date: new Date()
+            date: new Date(),
+            timerID: setInterval(() => this.tick(), 1000),
         }
     }
 
@@ -18,11 +19,6 @@ class App extends React.Component {
         fetch('http://localhost:8000/api/todos')
             .then(result => result.json())
             .then((data) => this.setState({ todos: data, loading: false }))
-
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        )
     }
 
     componentDidUpdate(prevState) {
@@ -44,11 +40,17 @@ class App extends React.Component {
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ "todo": newTodo })
             })
-            this.setState({ todos: [...this.state.todos, newTodo] })
+            this.setState({ todos: [...this.state.todos, newTodo], editing: false })
+        }
+
+        const singleTodo = (e) => {
+            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`)
+                .then(response => response.json())
+                .then((data) => this.setState({ editText: data }))
         }
 
         const DeleteTodo = (e) => {
-            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.id}`, {
+            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             })
@@ -57,10 +59,13 @@ class App extends React.Component {
         }
 
         const handleEdit = (e) => {
-            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.id}`, {
+            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             })
+            const todos = this.state.todos.filter(todo => todo.todo_id !== parseInt(e.target.parentNode.id))
+            this.setState({ todos: todos, editing: true })
+            singleTodo(e)
         }
 
         if (this.state.loading) {
@@ -73,7 +78,11 @@ class App extends React.Component {
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
                     <Route path='/home' element={
-                        <Home todos={this.state.todos} addTodo={addTodo} DeleteTodo={DeleteTodo} handleEdit={handleEdit} clock={this.state.date.toLocaleTimeString()} />} />
+                        <Home todos={this.state.todos}
+                            addTodo={addTodo}
+                            DeleteTodo={DeleteTodo}
+                            clock={this.state.date.toLocaleTimeString()}
+                        />} />
                 </Routes>
             </>
         )
