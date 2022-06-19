@@ -5,9 +5,10 @@ export default class Button extends React.Component {
 
         const handleTodo = (e) => {
             this.props.handleTodo(e)
+
         }
         return (
-            <button className={this.props.class} onClick={handleTodo}>{this.props.class}</button>
+            <button className={this.props.class} onClick={handleTodo}>{this.props.text}</button>
         )
     }
 }
