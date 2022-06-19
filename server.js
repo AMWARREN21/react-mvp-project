@@ -42,8 +42,13 @@ app.post('/api/todos', async (req, res) => {
 
 app.patch('/api/todos/:id', async (req, res) => {
     try {
-        const { todo } = req.body
-        const result = await pool.query('UPDATE todos SET todo = $1 WHERE todo_id IS $2 RETURNING *;', [todo, req.params.id])
+        const { todo, completed } = req.body
+        const todos = await pool.query('SELECT * FROM todos WHERE todo_id = $1', [req.params.id])
+        const obj = {
+            todo: todo || todos.rows[0].todo,
+            complete: completed || todos.rows[0].completed
+        }
+        const result = await pool.query('UPDATE todos SET todo = $1,completed = $2 WHERE todo_id = $3 RETURNING *;', [obj.todo, obj.complete, req.params.id])
         res.json(result.rows)
     } catch (err) {
         console.error(err.message)
