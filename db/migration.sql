@@ -9,5 +9,5 @@ DROP TABLE IF EXISTS todos;
 CREATE TABLE todos (
     todo_id SERIAL PRIMARY KEY,
     todo text,
-    completed boolean
+    completed boolean DEFAULT false
 );
