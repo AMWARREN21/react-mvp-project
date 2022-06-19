@@ -9,13 +9,13 @@ dotenv.config()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json());
-// Step 1:
+app.use(cors())
+// // Step 1:
 app.use(express.static(path.resolve(__dirname, "./client/build")));
-// Step 2:
-app.get("*", function (request, response) {
+// // Step 2:
+app.get("/", function (request, response) {
     response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-app.use(cors())
 
 app.get('/api/todos', async (req, res) => {
     try {
