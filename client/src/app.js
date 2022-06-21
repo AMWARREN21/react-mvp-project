@@ -18,7 +18,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/todos')
+        fetch('https://todo-react-mvp.herokuapp.com/api/todos')
             .then(result => result.json())
             .then((data) => this.setState({ todos: data, loading: false }))
     }
