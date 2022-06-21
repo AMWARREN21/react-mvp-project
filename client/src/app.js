@@ -43,7 +43,7 @@ class App extends React.Component {
         }
 
         const addTodo = (newTodo) => {
-            fetch('http://localhost:8000/api/todos', {
+            fetch('https://todo-react-mvp.herokuapp.com/api/todos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ "todo": newTodo })
@@ -52,7 +52,7 @@ class App extends React.Component {
         }
 
         const DeleteTodo = (e) => {
-            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`, {
+            fetch(`https://todo-react-mvp.herokuapp.com/api/todos/${e.target.parentNode.parentNode.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             })
@@ -63,7 +63,7 @@ class App extends React.Component {
         const handleEdit = (e) => {
             toggle(e)
             let completed = e.target.parentNode.parentNode.classList[1]
-            fetch(`http://localhost:8000/api/todos/${e.target.parentNode.parentNode.id}`, {
+            fetch(`https://todo-react-mvp.herokuapp.com/api/todos/${e.target.parentNode.parentNode.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ completed: completed })
