@@ -13,8 +13,17 @@ app.use(cors())
 // // Step 1:
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 // // Step 2:
-app.get("/*", function (request, response) {
-    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+app.get("/", function (req, res) {
+    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+app.get("/home", function (request, res) {
+    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+app.get("/complete", function (request, res) {
+    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+app.get("/incomplete", function (request, res) {
+    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 app.get('/api/todos', async (req, res) => {
