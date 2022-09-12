@@ -30,6 +30,9 @@ Deployed URL: https://todo-react-mvp.herokuapp.com/home
   cd client
   ```
   ```sh
+  npm install
+  ```
+  ```sh
   npm run start
   ```
 
